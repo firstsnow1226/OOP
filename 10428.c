@@ -1,8 +1,23 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#define MaxN 75000
+
+int count_row(int n, uint64_t arr[]){
+    int row_n = 0;
+    for(int i=0;i<MaxN;i++){
+        if(n>64) return 0;
+
+        uint64_t tmp = (1ULL<<n)-1;
+        for(int j=0;j<65-n;j++){
+            uint64_t now = tmp<<j ;
+            if( (arr[i]&now) == now )  row_n++;
+        }
+    }
+    return row_n;
+}
+
 int main(){
-        int MaxN = 75000;
         uint64_t arr[MaxN];
         int n;
         scanf("%d", &n);
@@ -12,16 +27,7 @@ int main(){
         }
  
         // row
-        int row_n = 0;
-        for(int i=0;i<MaxN;i++){
-                if(n>64) break;
- 
-                uint64_t tmp = (1ULL<<n)-1;
-                for(int j=0;j<65-n;j++){
-                        uint64_t now = tmp<<j ;
-                        if( (arr[i]&now) == now )  row_n++;
-                }
-        }
+        int row_n = count_row(n, arr);
         printf("%d\n", row_n);
  
         // column
