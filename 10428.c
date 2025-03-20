@@ -32,6 +32,22 @@ int count_col(int n, uint64_t arr[]){
     return col_n;
 }
 
+int count_dia(int n, uint64_t arr[], int start_pos, int dir){
+    int dia_n = 0;
+    for(int i=0;i<MaxN-n+1;i++){
+        uint64_t tot = arr[i]>>(start_pos);
+        for(int k=1;k<n;k++)
+            tot &= arr[i+k]>>(start_pos+dir*k);
+        
+        for(int j=0;j<65-n;j++){
+            uint64_t tmp = 1ULL<<j;
+
+            if( (tmp&tot)!=0 ) dia_n++;
+        }
+    }
+    return dia_n;
+}
+
 int main(){
         uint64_t arr[MaxN];
         int n;
@@ -50,34 +66,10 @@ int main(){
         printf("%d\n",col_n);
  
         // dia
-        int dia_n = 0;
-        for(int i=0;i<MaxN-n+1;i++){
-                uint64_t tot = arr[i]>>(n-1);
-                for(int k=1;k<n;k++){
-                        tot &= arr[i+k]>>(n-1-k);
-                }
- 
-                for(int j=0;j<65-n;j++){
-                        uint64_t tmp = 1ULL<<j;
- 
-                        if( (tmp&tot)!=0 ) dia_n++;
-                }
-        }
+        int dia_n = count_dia(n, arr, n-1, -1);
         printf("%d\n",dia_n);
  
         // anti-dia
-        int adia_n = 0;
-        for(int i=0;i<MaxN-n+1;i++){
-                uint64_t tot = arr[i];
-                for(int k=1;k<n;k++){
-                        tot &= arr[i+k]>>k;
-                }
- 
-                for(int j=0;j<65-n;j++){
-                        uint64_t tmp = 1ULL<<j;
- 
-                        if( (tmp&tot)!=0 ) adia_n++;
-                }
-        }
+        int adia_n = count_dia(n, arr, 0, 1);
         printf("%d\n",adia_n);
 }
