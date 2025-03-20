@@ -17,6 +17,21 @@ int count_row(int n, uint64_t arr[]){
     return row_n;
 }
 
+int count_col(int n, uint64_t arr[]){
+    int col_n = 0;
+    for(int i=0;i<MaxN-n+1;i++){
+        uint64_t tot = arr[i];
+        for(int k=1;k<n;k++)
+            tot = tot&arr[i+k];
+        
+        for(int j=0;j<64;j++){
+            uint64_t tmp = 1ULL<<j;
+            if( (tmp&tot)!=0 ) col_n++;
+        }
+    }
+    return col_n;
+}
+
 int main(){
         uint64_t arr[MaxN];
         int n;
@@ -31,21 +46,7 @@ int main(){
         printf("%d\n", row_n);
  
         // column
-        int col_n = 0;
-        for(int i=0;i<MaxN-n+1;i++){
-                uint64_t tot = arr[i];
-                for(int k=1;k<n;k++){
-                        tot = tot&arr[i+k];
-                }
-                //printf("%d %llu\n", i, tot);
- 
-                for(int j=0;j<64;j++){
-                        uint64_t tmp = 1ULL<<j;
- 
-                        if( (tmp&tot)!=0 ) col_n++;
-                }
- 
-        }
+        int col_n = count_col(n, arr);
         printf("%d\n",col_n);
  
         // dia
