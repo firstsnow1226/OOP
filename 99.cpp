@@ -10,6 +10,7 @@ int main(){
     for(int i=0;i<N;i++){
         string name;
         cin>>name;
+        players[i].set_board_size(M);
         players[i].set_name(name);
 
         int num;
@@ -19,6 +20,14 @@ int main(){
         }
     }
 
+    for(int i=0;i<M*M;i++){
+        int bingo_num;
+        cin>>bingo_num;
+
+        players[i].update_cnt(bingo_num);
+    }
+
+    
     
 
     return 0;
