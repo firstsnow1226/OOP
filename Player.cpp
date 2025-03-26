@@ -23,8 +23,8 @@ void Player::set_pos(int pos,int num){
     pos_of_num[num] = pos;
 }
 
-void Player::update_cnt(int num){
-    int pos = pos_of_num[num];
+void Player::update_cnt(int bingo_num){
+    int pos = pos_of_num[bingo_num];
     int row = pos/board_size;
     int col = pos%board_size;
 
@@ -33,4 +33,16 @@ void Player::update_cnt(int num){
  
     if( row == col  ) cnt_of_line[2*board_size]++;
     if( row + col == board_size-1 ) cnt_of_line[2*board_size+1]++;
+}
+
+bool Player::check(int bingo_num){
+    int pos = pos_of_num[bingo_num];
+    int row = pos/board_size;
+    int col = pos%board_size;
+
+    if( cnt_of_line[row]==board_size or cnt_of_line[board_size+col]==board_size or 
+        cnt_of_line[2*board_size]==board_size or cnt_of_line[2*board_size+1]==board_size)
+        return true;
+
+    return false;
 }

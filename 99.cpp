@@ -19,16 +19,22 @@ int main(){
             players[i].set_pos(j,num);
         }
     }
-
-    for(int i=0;i<M*M;i++){
+    bool find_ans = false;
+    for(int i=0;i<M*M and !find_ans;i++){
         int bingo_num;
         cin>>bingo_num;
 
-        players[i].update_cnt(bingo_num);
+        for(int j=0;j<N;j++){
+            players[j].update_cnt(bingo_num);
+            bool check_win = players[j].check(bingo_num);
+
+            if( !find_ans and check_win ){
+                cout<<bingo_num;
+                find_ans = true;
+            }
+            if( check_win )
+                cout<<' '<<players[j].get_name();
+        }
     }
-
-    
-    
-
     return 0;
 }

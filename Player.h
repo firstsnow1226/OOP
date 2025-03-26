@@ -15,5 +15,6 @@ public:
     void set_board_size(int size);
     void set_name(string name);
     void set_pos(int pos,int num);
-    void update_cnt(int num);
+    void update_cnt(int bingo_num);
+    bool check(int bingo_num);
 };
